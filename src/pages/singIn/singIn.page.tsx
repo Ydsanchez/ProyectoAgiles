@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { UserSingIn } from "../../interfaces/index";
 import { useAuth } from "../../context/index";
+import { Link } from "react-router-dom";
 
 export const SingIn = () => {
   const [user, setUser] = useState<UserSingIn>({ email: "", password: "" });
@@ -90,9 +91,9 @@ export const SingIn = () => {
 
             <p className="text-center text-sm mt-4">
               ¿No tienes cuenta?{" "}
-              <a href="/register" className="text-blue-500">
+              <Link to="/auth/register" className="text-blue-500">
                 Regístrate
-              </a>
+              </Link>
             </p>
           </div>
         </div>

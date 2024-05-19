@@ -5,17 +5,26 @@ const api = axios.create({
   withCredentials: true,
 });
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers["authorization"] = `Bearer ${token}`;
+api.interceptors.request.use(
+  function (config) {
+    const token = sessionStorage.getItem("session");
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
+);
 
-  return config;
-});
-
-api.interceptors.response.use((response) => {
-  return response;
-});
+api.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
 
 export { api };

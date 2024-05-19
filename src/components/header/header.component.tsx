@@ -1,28 +1,199 @@
-export const Header = () => {
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useAuth } from "../../context/index";
+import { NavLink } from "react-router-dom";
+
+export const Header: React.FC = () => {
+  const { isAuthenticated,user } = useAuth();
+  console.log(user)
+  const users = {
+    name: `${user.lastname} ${user.firstname}`,
+    email: ` ${user.email}`,
+    imageUrl:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  };
+  const userNavigation = [
+    { name: "Mi Perfil", href: "/perfil" },
+    { name: "Settings", href: "#" },
+    { name: "Cerrar Session", href: "#", funtion: () => {} },
+  ];
+
+  function classNames(...classes: any) {
+    return classes.filter(Boolean).join(" ");
+  }
+
   return (
-    <header className="bg-white shadow-md w-full py-4 px-4 flex justify-between items-center">
-      <div className="flex items-center">
-        <img
-          src="https://placehold.co/200x30"
-          alt="Logo"
-          className="w-16 h-16 mr-4"
-        />
-        <h1 className="text-2xl font-semibold">Product</h1>
+    <>
+      <div className="min-h-full">
+        <Disclosure as="nav" className="bg-blue-800">
+          {({ open }) => (
+            <>
+              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="flex h-16 items-center justify-between">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0">
+                      <h2 className="text-white text-4x1 font-">Mark</h2>
+                    </div>
+                  </div>
+                  <div className="hidden md:block">
+                    <div className="ml-4 flex items-center md:ml-6">
+                      {isAuthenticated ? (
+                        <>
+                          <button
+                            type="button"
+                            className="relative rounded-full bg-blue-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600"
+                          >
+                            <span className="absolute -inset-1.5" />
+                            <span className="sr-only">View notifications</span>
+                            <BellIcon className="h-6 w-6" aria-hidden="true" />
+                          </button>
+
+                          {/* Profile dropdown */}
+                          <Menu as="div" className="relative ml-3">
+                            <div>
+                              <Menu.Button className="relative flex max-w-xs items-center rounded-full bg-blue-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                                <span className="absolute -inset-1.5" />
+                                <span className="sr-only">Open user menu</span>
+                                <img
+                                  className="h-8 w-8 rounded-full"
+                                  src={users.imageUrl}
+                                  alt=""
+                                />
+                              </Menu.Button>
+                            </div>
+                            <Transition
+                              as={Fragment}
+                              enter="transition ease-out duration-100"
+                              enterFrom="transform opacity-0 scale-95"
+                              enterTo="transform opacity-100 scale-100"
+                              leave="transition ease-in duration-75"
+                              leaveFrom="transform opacity-100 scale-100"
+                              leaveTo="transform opacity-0 scale-95"
+                            >
+                              <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                {userNavigation.map((item) => (
+                                  <Menu.Item key={item.name}>
+                                    {({ active }) => (
+                                      <a
+                                        href={item.href}
+                                        className={classNames(
+                                          active ? "bg-gray-100" : "",
+                                          "block px-4 py-2 text-sm text-gray-700"
+                                        )}
+                                      >
+                                        {item.name}
+                                      </a>
+                                    )}
+                                  </Menu.Item>
+                                ))}
+                              </Menu.Items>
+                            </Transition>
+                          </Menu>
+                        </>
+                      ) : (
+                        <div>
+                          <NavLink
+                            className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-blue-700 hover:text-white"
+                            to="/auth/login"
+                          >
+                            Sing In
+                          </NavLink>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="-mr-2 flex md:hidden">
+                    {/* Mobile menu button */}
+                    <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-blue-800 p-2 text-gray-400 hover:bg-blue-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-800">
+                      <span className="absolute -inset-0.5" />
+                      <span className="sr-only">Open main menu</span>
+                      {open ? (
+                        <XMarkIcon
+                          className="block h-6 w-6"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <Bars3Icon
+                          className="block h-6 w-6"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </Disclosure.Button>
+                  </div>
+                </div>
+              </div>
+
+              <Disclosure.Panel className="md:hidden">
+                <div className="border-t border-blue-800 pb-3 pt-4">
+                  {isAuthenticated ? (
+                    <>
+                      <div className="flex items-center px-5">
+                        <div className="flex-shrink-0">
+                          <img
+                            className="h-10 w-10 rounded-full"
+                            src={users.imageUrl}
+                            alt=""
+                          />
+                        </div>
+                        <div className="ml-3">
+                          <div className="text-base font-medium leading-none text-white">
+                            {users.name}
+                          </div>
+                          <div className="text-sm font-medium leading-none text-gray-400">
+                            {users.email}
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          className="relative ml-auto flex-shrink-0 rounded-full bg-blue-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        >
+                          <span className="absolute -inset-1.5" />
+                          <span className="sr-only">View notifications</span>
+                          <BellIcon className="h-6 w-6" aria-hidden="true" />
+                        </button>
+                      </div>
+                      <div className="mt-3 space-y-1 px-2">
+                        {userNavigation.map((item) => (
+                          <Disclosure.Button
+                            key={item.name}
+                            as="a"
+                            href={item.href}
+                            className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-blue-700 hover:text-white"
+                          >
+                            {item.name}
+                          </Disclosure.Button>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <div className="mt-3 space-y-1 px-2">
+                      <NavLink
+                        className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-blue-700 hover:text-white"
+                        to="/auth/login"
+                      >
+                        Sing In
+                      </NavLink>
+                    </div>
+                  )}
+                </div>
+              </Disclosure.Panel>
+            </>
+          )}
+        </Disclosure>
+        <header className="bg-white shadow">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <h1 className="text-3xl font-bold tracking-tight text-blue-900">
+              Mark
+            </h1>
+          </div>
+        </header>
+        <main>
+          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+            {/* Your content */}
+          </div>
+        </main>
       </div>
-      <nav className="flex space-x-4">
-        <a href="/" className="text-gray-600 font-medium hover:text-gray-900">
-          Features
-        </a>
-        <a href="/" className="text-gray-600 font-medium hover:text-gray-900">
-          Marketplace
-        </a>
-        <a href="/" className="text-gray-600 font-medium hover:text-gray-900">
-          Company
-        </a>
-        <button className="bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600">
-          Log in
-        </button>
-      </nav>
-    </header>
+    </>
   );
 };

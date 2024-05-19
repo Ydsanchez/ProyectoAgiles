@@ -6,7 +6,7 @@ export const SingUp = (user: UserSingUp) => {
 };
 
 export const SingIn = (user: UserSingIn) => {
-  return api.post("/login", user);
+  return api.post("/users/login", user);
 };
 
 export const UpdateUser = (user: User, id: number) => {
@@ -18,5 +18,5 @@ export const GetUser = () => {
 };
 
 export const GetVerifiedUser = () => {
-  return api.get(`/users/check-status`);
-}
+  return api.get(`/verify/status`);
+};
