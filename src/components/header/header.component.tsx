@@ -5,18 +5,17 @@ import { useAuth } from "../../context/index";
 import { NavLink } from "react-router-dom";
 
 export const Header: React.FC = () => {
-  const { isAuthenticated,user } = useAuth();
-  console.log(user)
+  const { isAuthenticated, user, logout } = useAuth();
+  console.log(user);
   const users = {
-    name: `${user.lastname} ${user.firstname}`,
-    email: ` ${user.email}`,
+    name: `${isAuthenticated ? user.lastname : "no estas autenticado"}`,
+    email: `${isAuthenticated ? user.email : "no estas autenticado"}`,
     imageUrl:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
   };
   const userNavigation = [
     { name: "Mi Perfil", href: "/perfil" },
     { name: "Settings", href: "#" },
-    { name: "Cerrar Session", href: "#", funtion: () => {} },
   ];
 
   function classNames(...classes: any) {
@@ -87,6 +86,15 @@ export const Header: React.FC = () => {
                                     )}
                                   </Menu.Item>
                                 ))}
+                                <Menu.Item>
+                                  <a
+                                    href="#"
+                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                    onClick={logout}
+                                  >
+                                    Cerrar Session
+                                  </a>
+                                </Menu.Item>
                               </Menu.Items>
                             </Transition>
                           </Menu>
@@ -164,6 +172,13 @@ export const Header: React.FC = () => {
                             {item.name}
                           </Disclosure.Button>
                         ))}
+                        <Disclosure.Button
+                          as="a"
+                          onClick={logout}
+                          className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-blue-700 hover:text-white"
+                        >
+                          Cerrar Session
+                        </Disclosure.Button>
                       </div>
                     </>
                   ) : (

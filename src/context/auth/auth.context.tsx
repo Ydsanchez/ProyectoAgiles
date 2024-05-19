@@ -8,6 +8,7 @@ import {
 import { UserSingIn } from "../../interfaces/index";
 import { GetVerifiedUser, SingIn } from "../../services/user";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -42,20 +43,31 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signin = async (user: UserSingIn) => {
     try {
-      SingIn(user).then((res) => {
-        const token = res.data.token;
-        console.log(res);
-        setIsAuthenticated(true);
-        setUser(res.data);
-        sessionStorage.setItem("session", token);
-      });
+      const res = await SingIn(user);
+      const token = res.data.token;
+      setIsAuthenticated(true);
+      setUser(res.data);
+      sessionStorage.setItem("session", token);
     } catch (error) {
-      Swal.fire({
-        title: "ERROR¡",
-        text: `${error} `,
-        icon: `error`,
-        confirmButtonText: "OK",
-      });
+      if (axios.isAxiosError(error) && error.response) {
+        const errorMessage = error.response.data.message;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: ` ${errorMessage}`,
+          footer: '<a href="#">Why do I have this issue?</a>',
+        });
+        console.log(errorMessage); // Mostrar el mensaje de error del backend
+      } else {
+        const unknownError = "Error desconocido";
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: ` ${unknownError}`,
+          footer: '<a href="#">Why do I have this issue?</a>',
+        });
+        console.log(unknownError); // Mostrar un mensaje genérico de error
+      }
     }
   };
 
