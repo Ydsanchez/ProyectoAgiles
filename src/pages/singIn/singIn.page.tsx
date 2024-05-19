@@ -1,17 +1,18 @@
 import { FormEvent, useState } from "react";
 import { UserSingIn } from "../../interfaces/index";
 import { useAuth } from "../../context/index";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const SingIn = () => {
   const [user, setUser] = useState<UserSingIn>({ email: "", password: "" });
   const { signin } = useAuth();
-
+  const navegate = useNavigate();
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       console.log(user);
       signin(user);
+      navegate("/");
     } catch (error) {
       console.log(error);
     }
