@@ -44,7 +44,7 @@ export const Home = () => {
             sed autem eligendi vitae nesciunt? Laboriosam, praesentium. Suscipit
             perspiciatis commodi quod?
           </p>
-          <Link to="./componentes/pantallas/productos">
+          <Link to="/producto">
             <button
               className="rounded-[4px] bg-black px-2 py-1 text-white"
               type="button"

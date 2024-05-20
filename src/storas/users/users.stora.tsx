@@ -3,6 +3,17 @@ import { User, UserSingUp } from "../../interfaces/index";
 import { GetUser, SingUp } from "../../services/user";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { AuthStatus } from "../../interfaces/index";
+
+export interface AuthState {
+  status: AuthStatus;
+  token?: string;
+  user?: User;
+
+  loginUser: (email: string, password: string) => Promise<void>;
+  checkAuthStatus: () => Promise<void>;
+  logoutUser: () => void;
+}
 
 interface UserState {
   user: User[];
@@ -10,7 +21,7 @@ interface UserState {
   getUser: () => Promise<any>;
 }
 
-const useUserStorages = create<UserState>((set, get) => ({
+const useUserStorages = create<UserState>((set) => ({
   user: [],
   addUser: async (data: UserSingUp) => {
     try {
@@ -22,7 +33,7 @@ const useUserStorages = create<UserState>((set, get) => ({
         confirmButtonText: "OK",
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       if (axios.isAxiosError(error) && error.response) {
         const errorMessage = error.response.data.message;
         Swal.fire({
