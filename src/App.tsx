@@ -6,6 +6,10 @@ import { VerDetalle } from "./pages/index";
 import { CarritoCompra } from "./pages/index";
 import { ProcesoCompra } from "./pages/index";
 import { OrdenCompra } from "./pages/index";
+import { AgregarProducto } from "./pages/index";
+import { EditarProducto } from "./pages/index";
+import { EditarUsuario } from "./pages/index";
+import { ListadoPedido } from "./pages/index";
 
 function App() {
   return (
@@ -20,6 +24,10 @@ function App() {
         <Route path="/carritocompra" element={<CarritoCompra />} />
         <Route path="/procesocompra" element={<ProcesoCompra />} />
         <Route path="/ordencompra" element={<OrdenCompra />} />
+        <Route path="/agregarproducto" element={<AgregarProducto />} />
+        <Route path="/editarproducto" element={<EditarProducto />} />
+        <Route path="/editarusuario" element={<EditarUsuario />} />
+        <Route path="/listadopedido" element={<ListadoPedido />} />
         <Route
           path="/componentes/pantallas/productos/:id"
           element={<VerDetalle />}
