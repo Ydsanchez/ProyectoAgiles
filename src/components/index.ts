@@ -4,3 +4,4 @@ export * from "./Form/inputFile";
 export * from "./Form/linkText";
 export * from "./Form/select";
 export * from './header/header.component';
+export * from './List/tablesList';
