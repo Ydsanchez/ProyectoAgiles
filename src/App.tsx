@@ -1,17 +1,27 @@
-import { Home, SingIn, SingUp, PerfilUserPage } from "./pages/index";
+import {
+  Home,
+  SingIn,
+  SingUp,
+  PerfilUserPage,
+  ProductPage,
+  Productos,
+  CarritoCompra,
+  ProcesoCompra,
+  OrdenCompra,
+  AgregarProducto,
+  EditarProducto,
+  EditarUsuario,
+  ListadoPedido,
+  VerDetalle,
+} from "./pages/index";
 import { Routes, Route } from "react-router-dom";
 import { Header } from "./components/index";
-import { Productos } from "./pages/index";
-import { VerDetalle } from "./pages/index";
-import { CarritoCompra } from "./pages/index";
-import { ProcesoCompra } from "./pages/index";
-import { OrdenCompra } from "./pages/index";
-import { AgregarProducto } from "./pages/index";
-import { EditarProducto } from "./pages/index";
-import { EditarUsuario } from "./pages/index";
-import { ListadoPedido } from "./pages/index";
+import { RouterPrivateUser } from "./routers/index";
+import { useAuth } from "./context";
 
 function App() {
+  const { user, isAuthenticated } = useAuth();
+  console.log(user);
   return (
     <>
       <Header />
@@ -33,6 +43,14 @@ function App() {
           element={<VerDetalle />}
         />
         <Route path="/perfil/:id" element={<PerfilUserPage />} />
+        <Route
+          element={
+            <RouterPrivateUser rol={"USER"} isAuthenticated={isAuthenticated} />
+          }
+        >
+          <Route path="/perfil" element={<PerfilUserPage />} />
+          <Route path="/product-add" element={<ProductPage />} />
+        </Route>
         <Route path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
     </>

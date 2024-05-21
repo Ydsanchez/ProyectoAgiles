@@ -1,10 +1,10 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 interface RouteStatus {
   isAuthenticated: boolean;
   rol: string;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 export const RouterPrivateUser: React.FC<RouteStatus> = ({
@@ -12,7 +12,7 @@ export const RouterPrivateUser: React.FC<RouteStatus> = ({
   rol,
 }) => {
   if (isAuthenticated === true && rol === "USER") {
-    return ;
+    return <Outlet />;
   }
-  return <Outlet />;
+  return <Navigate to="/" />;
 };
