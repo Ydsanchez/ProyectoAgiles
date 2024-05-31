@@ -6,7 +6,8 @@ export const Productos = () => {
   return (
     <div className="mt-8">
       <h1 className="font-semibold text-gray-900 mb-50">Productos</h1>
-      <div className="flex gap-x-10">
+      <div className="grid justify-items-center">
+      <div className="flex gap-x-10 ">
         {miArray.map((data) => (
           <div key={data.id} className="h-64 bg-gray-200 m-4">
             <div className="relative bg-white rounded-lg overflow-hidden shadow-md">
@@ -35,6 +36,7 @@ export const Productos = () => {
         ))}
 
         {/* Agrega más cards aquí si es necesario */}
+      </div>
       </div>
     </div>
   );

@@ -32,7 +32,9 @@ export const Header: React.FC = () => {
                 <div className="flex h-16 items-center justify-between">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
-                      <h2 className="text-white text-4x1 font-">NetMarket</h2>
+                      <NavLink className="text-white text-4x1 font-" to="/">
+                        NetMarket
+                      </NavLink>
                     </div>
                   </div>
                   <div className="hidden md:block">
