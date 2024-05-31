@@ -32,7 +32,7 @@ export const Header: React.FC = () => {
                 <div className="flex h-16 items-center justify-between">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
-                      <h2 className="text-white text-4x1 font-">Mark</h2>
+                      <h2 className="text-white text-4x1 font-">NetMarket</h2>
                     </div>
                   </div>
                   <div className="hidden md:block">
@@ -189,6 +189,7 @@ export const Header: React.FC = () => {
                       >
                         Sing In
                       </NavLink>
+                      
                     </div>
                   )}
                 </div>

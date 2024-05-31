@@ -27,6 +27,11 @@ export const Home = () => {
       image:
         "https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1702458113-800_800_F5C3D514CF31D1386743BC5AB8319D35mp.png?crop=1xw:1xh;center,top&resize=980:*",
     },
+    {
+      id: 5,
+      title: "Categoria 5",
+      image: "https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1702458113-800_800_F5C3D514CF31D1386743BC5AB8319D35mp.png?crop=1xw:1xh;center,top&resize=980:*",
+    },
   ];
 
   return (
@@ -37,7 +42,7 @@ export const Home = () => {
           <span className="rounded-full bg-yellow-500 px-3 py-1 text-xs font-medium uppercase">
             Semana de descuentos
           </span>
-          <h1>Tienda Online de productos premium</h1>
+          <h1 className="font-bold md:font-bold text-3xl md:text-8x1">Tienda Online de productos premium</h1>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,
             qui. Dolore quaerat sint iusto dolor, eius quas, quibusdam labore
@@ -59,6 +64,7 @@ export const Home = () => {
       {/* Categorias */}
       <section className="flex flex-col gap-y-10">
         <h3>Categorias más populares</h3>
+        <div className="grid justify-items-center">
         <div className="flex gap-x-10">
           {Data.map(({ id, title, image }) => (
             <div
@@ -79,6 +85,7 @@ export const Home = () => {
               <span className="font-semibold">{title}</span>
             </div>
           ))}
+        </div>
         </div>
       </section>
     </main>
